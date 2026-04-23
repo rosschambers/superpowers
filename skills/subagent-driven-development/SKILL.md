@@ -35,6 +35,16 @@ digraph when_to_use {
 - Two-stage review after each task: spec compliance first, then code quality
 - Faster iteration (no human-in-loop between tasks)
 
+## When NOT to Use
+
+Do the work directly in a single response instead of dispatching a subagent when:
+- The plan has a single task
+- The task can be completed in one response without losing context
+- Tasks are tightly coupled and share mutable state
+- Overhead of dispatching + two-stage review exceeds the work itself (rule of thumb: <10 minutes of actual work)
+
+Dispatching a subagent for trivial work adds tokens and latency without quality gains.
+
 ## The Process
 
 ```dot

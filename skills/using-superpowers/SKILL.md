@@ -3,92 +3,73 @@ name: using-superpowers
 description: Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions
 ---
 
-<EXTREMELY-IMPORTANT>
-If you think there is even a 1% chance a skill might apply to what you are doing, you ABSOLUTELY MUST invoke the skill.
-
-IF A SKILL APPLIES TO YOUR TASK, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.
-
-This is not negotiable. This is not optional. You cannot rationalize your way out of this.
-</EXTREMELY-IMPORTANT>
-
-## How to Access Skills
-
-**In OpenCode:** Use the `Skill` tool. When you invoke a skill, its content is loaded and presented to you—follow it directly. Never use the Read tool on skill files.
-
-**In other environments:** Check your platform's documentation for how skills are loaded.
+<HARD-GATE>
+If a skill's description matches the task, load it before responding. This applies to clarifying questions too — check for skills first, then ask.
+</HARD-GATE>
 
 # Using Skills
 
+## How to Access Skills
+
+**In OpenCode:** Use the `Skill` tool. When you invoke a skill, its content is loaded — follow it directly. Never read skill files with the Read tool.
+
+**In other environments:** Check your platform's documentation for how skills are loaded.
+
 ## The Rule
 
-**Invoke relevant or requested skills BEFORE any response or action.** Even a 1% chance a skill might apply means that you should invoke the skill to check. If an invoked skill turns out to be wrong for the situation, you don't need to use it.
+**Invoke matching skills BEFORE any response or action**, including clarifying questions. If an invoked skill turns out not to apply, you don't have to use it — but you still checked.
 
 ```dot
 digraph skill_flow {
     "User message received" [shape=doublecircle];
-    "About to EnterPlanMode?" [shape=doublecircle];
+    "About to enter plan mode?" [shape=diamond];
     "Already brainstormed?" [shape=diamond];
     "Invoke brainstorming skill" [shape=box];
-    "Might any skill apply?" [shape=diamond];
+    "Skill description matches?" [shape=diamond];
     "Invoke Skill tool" [shape=box];
     "Announce: 'Using [skill] to [purpose]'" [shape=box];
-    "Has checklist?" [shape=diamond];
-    "Create TodoWrite todo per item" [shape=box];
     "Follow skill exactly" [shape=box];
-    "Respond (including clarifications)" [shape=doublecircle];
+    "Respond" [shape=doublecircle];
 
-    "About to EnterPlanMode?" -> "Already brainstormed?";
+    "User message received" -> "About to enter plan mode?";
+    "About to enter plan mode?" -> "Already brainstormed?" [label="yes"];
+    "About to enter plan mode?" -> "Skill description matches?" [label="no"];
     "Already brainstormed?" -> "Invoke brainstorming skill" [label="no"];
-    "Already brainstormed?" -> "Might any skill apply?" [label="yes"];
-    "Invoke brainstorming skill" -> "Might any skill apply?";
-
-    "User message received" -> "Might any skill apply?";
-    "Might any skill apply?" -> "Invoke Skill tool" [label="yes, even 1%"];
-    "Might any skill apply?" -> "Respond (including clarifications)" [label="definitely not"];
+    "Already brainstormed?" -> "Skill description matches?" [label="yes"];
+    "Invoke brainstorming skill" -> "Skill description matches?";
+    "Skill description matches?" -> "Invoke Skill tool" [label="yes"];
+    "Skill description matches?" -> "Respond" [label="no"];
     "Invoke Skill tool" -> "Announce: 'Using [skill] to [purpose]'";
-    "Announce: 'Using [skill] to [purpose]'" -> "Has checklist?";
-    "Has checklist?" -> "Create TodoWrite todo per item" [label="yes"];
-    "Has checklist?" -> "Follow skill exactly" [label="no"];
-    "Create TodoWrite todo per item" -> "Follow skill exactly";
+    "Announce: 'Using [skill] to [purpose]'" -> "Follow skill exactly";
+    "Follow skill exactly" -> "Respond";
 }
 ```
 
 ## Red Flags
 
-These thoughts mean STOP—you're rationalizing:
-
-| Thought | Reality |
-|---------|---------|
-| "This is just a simple question" | Questions are tasks. Check for skills. |
-| "I need more context first" | Skill check comes BEFORE clarifying questions. |
-| "Let me explore the codebase first" | Skills tell you HOW to explore. Check first. |
-| "I can check git/files quickly" | Files lack conversation context. Check for skills. |
-| "Let me gather information first" | Skills tell you HOW to gather information. |
-| "This doesn't need a formal skill" | If a skill exists, use it. |
-| "I remember this skill" | Skills evolve. Read current version. |
-| "This doesn't count as a task" | Action = task. Check for skills. |
-| "The skill is overkill" | Simple things become complex. Use it. |
-| "I'll just do this one thing first" | Check BEFORE doing anything. |
-| "This feels productive" | Undisciplined action wastes time. Skills prevent this. |
-| "I know what that means" | Knowing the concept ≠ using the skill. Invoke it. |
+| Thought | Action |
+|---------|--------|
+| "I'll explore the codebase first" | Check for a skill first — skills tell you how to explore. |
+| "I remember this skill" | Load the current version; skills evolve. |
+| "The skill is overkill here" | Load it. The skill itself will tell you if it doesn't apply. |
+| "I'll do this one small thing first" | Check for skills before any action. |
 
 ## Skill Priority
 
-When multiple skills could apply, use this order:
+When multiple skills could apply:
 
-1. **Process skills first** (brainstorming, debugging) - these determine HOW to approach the task
-2. **Implementation skills second** (frontend-design, mcp-builder) - these guide execution
+1. **Process skills first** (brainstorming, debugging) — these determine HOW to approach the task.
+2. **Implementation skills second** (frontend-design, mcp-builder) — these guide execution.
 
 "Let's build X" → brainstorming first, then implementation skills.
 "Fix this bug" → debugging first, then domain-specific skills.
 
 ## Skill Types
 
-**Rigid** (TDD, debugging): Follow exactly. Don't adapt away discipline.
+- **Rigid** (TDD, debugging): Follow exactly.
+- **Flexible** (patterns): Adapt principles to context.
 
-**Flexible** (patterns): Adapt principles to context.
-
-The skill itself tells you which.
+The skill itself states which.
 
 ## User Instructions
 

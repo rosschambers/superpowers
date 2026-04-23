@@ -70,9 +70,11 @@ digraph brainstorming {
 
 **Presenting the design:**
 - Once you believe you understand what you're building, present the design
-- Scale each section to its complexity: a few sentences if straightforward, up to 200-300 words if nuanced
+- Keep sections as short as the content allows; cap at ~300 words per section
 - Ask after each section whether it looks right so far
 - Cover: architecture, components, data flow, error handling, testing
+- Include **acceptance criteria and constraints per component** — binary, checkable statements. Plans generated from the design will execute these literally, so vague criteria produce vague implementations.
+- State any **assumptions** the design makes (library versions, environment, existing code shape). Don't leave them implicit.
 - Be ready to go back and clarify if something doesn't make sense
 
 ## After the Design

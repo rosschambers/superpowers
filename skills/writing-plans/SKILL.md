@@ -41,10 +41,14 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Tech Stack:** [Key technologies/libraries]
 
+**Assumptions:** [Any key assumptions this plan makes — environment, library versions, existing code shape. If multiple valid approaches exist, state which was chosen and why.]
+
 ---
 ```
 
 ## Task Structure
+
+Each task MUST include acceptance criteria as a numbered, binary-checkable list. Models that follow instructions literally (such as Claude Opus 4.7) execute these item-for-item, so vague criteria produce vague implementations.
 
 ````markdown
 ### Task N: [Component Name]
@@ -53,6 +57,15 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 - Create: `exact/path/to/file.py`
 - Modify: `exact/path/to/existing.py:123-145`
 - Test: `tests/exact/path/to/test.py`
+
+**Acceptance Criteria:**
+- [ ] Function signature matches: `function_name(arg1: Type, arg2: Type) -> ReturnType`
+- [ ] Returns specific value for specific input
+- [ ] Raises specific exception for specific error case
+- [ ] Covered by tests listed below
+- [ ] No changes to files outside the list above
+
+**Assumptions (task-specific):** [Only if task has non-obvious assumptions beyond those in the header]
 
 **Step 1: Write the failing test**
 
@@ -88,11 +101,23 @@ git commit -m "feat: add specific feature"
 ````
 
 ## Remember
-- Exact file paths always
+- Exact file paths always — front-loaded, not "the homepage file"
 - Complete code in plan (not "add validation")
 - Exact commands with expected output
+- Numbered, binary-checkable acceptance criteria per task
+- State assumptions explicitly; models that follow instructions literally will not infer them
 - Reference relevant skills with @ syntax
 - DRY, YAGNI, TDD, frequent commits
+
+## Task Budgets (optional)
+
+For long agentic loops (multi-task plans executed in one session), consider noting a task budget per task in the plan:
+
+```markdown
+**Task Budget:** ~30k tokens (soft suggestion)
+```
+
+This helps the executor self-moderate. Use sparingly — restrictive budgets can cause incomplete work. Omit for open-ended tasks where quality matters more than speed.
 
 ## Execution Handoff
 

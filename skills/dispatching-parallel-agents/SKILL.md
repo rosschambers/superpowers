@@ -31,6 +31,13 @@ digraph when_to_use {
 }
 ```
 
+**Threshold:** Parallel dispatch is only worth it when all three hold:
+1. **N >= 3** independent problem domains
+2. Each domain needs **>5 minutes** of actual investigation/work
+3. No shared state between domains
+
+Below that threshold, do the work directly in a single response. Dispatching multiple subagents for small tasks adds more coordination overhead than the parallelism saves.
+
 **Use when:**
 - 3+ test files failing with different root causes
 - Multiple subsystems broken independently
@@ -41,6 +48,8 @@ digraph when_to_use {
 - Failures are related (fix one might fix others)
 - Need to understand full system state
 - Agents would interfere with each other
+- Only 1-2 independent tasks — do them directly
+- Tasks are quick (<5 minutes each) — dispatch overhead dominates
 
 ## The Pattern
 

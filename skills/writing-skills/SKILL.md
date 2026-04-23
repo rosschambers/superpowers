@@ -243,7 +243,7 @@ Always use subagents (50-100x context savings). REQUIRED: Use [other-skill-name]
 **Compress examples:**
 ```markdown
 # ❌ BAD: Verbose example (42 words)
-your human partner: "How did we handle authentication errors in React Router before?"
+User: "How did we handle authentication errors in React Router before?"
 You: I'll search past conversations for React Router authentication patterns.
 [Dispatch subagent with search query: "React Router authentication error handling 401"]
 
@@ -315,7 +315,7 @@ digraph when_flowchart {
 
 See @graphviz-conventions.dot for graphviz style rules.
 
-**Visualizing for your human partner:** Use `render-graphs.js` in this directory to render a skill's flowcharts to SVG:
+**Visualizing for the user:** Use `render-graphs.js` in this directory to render a skill's flowcharts to SVG:
 ```bash
 ./render-graphs.js ../some-skill           # Each diagram separately
 ./render-graphs.js ../some-skill --combine # All diagrams in one SVG
@@ -459,6 +459,8 @@ Different skill types need different test approaches:
 ## Bulletproofing Skills Against Rationalization
 
 Skills that enforce discipline (like TDD) need to resist rationalization. Agents are smart and will find loopholes when under pressure.
+
+**Model note:** Newer models (Claude Opus 4.7 and later) follow instructions more literally and rationalize less. On those models, skills can be shorter and rely on **positive framing** ("do X this way") rather than defense-in-depth against negative framings ("don't do Y"). When baselining with RED tests against newer models, expect fewer rationalizations — write minimal skills, add counters only for rationalizations you actually observe.
 
 **Psychology note:** Understanding WHY persuasion techniques work helps you apply them systematically. See persuasion-principles.md for research foundation (Cialdini, 2021; Meincke et al., 2025) on authority, commitment, scarcity, social proof, and unity principles.
 

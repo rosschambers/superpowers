@@ -64,14 +64,12 @@ Skip any step = lying, not verifying
 
 | Excuse | Reality |
 |--------|---------|
-| "Should work now" | RUN the verification |
-| "I'm confident" | Confidence ≠ evidence |
-| "Just this once" | No exceptions |
-| "Linter passed" | Linter ≠ compiler |
-| "Agent said success" | Verify independently |
-| "I'm tired" | Exhaustion ≠ excuse |
+| "Should work now" | Run the verification |
+| "Linter passed" | Linter ≠ compiler/tests |
+| "Agent said success" | Verify independently (check the diff) |
 | "Partial check is enough" | Partial proves nothing |
-| "Different words so rule doesn't apply" | Spirit over letter |
+
+**Note on self-verification:** Some models (Claude Opus 4.7 and later) self-verify during reasoning. This skill ensures verification is *externally observable* — command output in the transcript — not just internal reasoning. Model self-checks are not a substitute for running the command.
 
 ## Key Patterns
 
@@ -108,7 +106,7 @@ Skip any step = lying, not verifying
 ## Why This Matters
 
 From 24 failure memories:
-- your human partner said "I don't believe you" - trust broken
+- User said "I don't believe you" - trust broken
 - Undefined functions shipped - would crash
 - Missing requirements shipped - incomplete features
 - Time wasted on false completion → redirect → rework
