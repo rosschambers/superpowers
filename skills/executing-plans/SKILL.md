@@ -30,6 +30,8 @@ For each task:
 3. Run verifications as specified
 4. Mark as completed
 
+> The opencode-taskboard plugin automatically syncs TodoWrite status changes to murmur8 subtasks — no manual sync needed.
+
 ### Step 3: Report
 When batch complete:
 - Show what was implemented
