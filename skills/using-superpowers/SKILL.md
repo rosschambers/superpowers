@@ -9,68 +9,12 @@ If a skill's description matches the task, load it before responding. This appli
 
 # Using Skills
 
-## How to Access Skills
+**Invoke matching skills BEFORE any response or action**, including clarifying questions. Load the current version with the `skill` tool (never assume you remember one — skills evolve; never read skill files with the Read tool). If an invoked skill turns out not to apply, you don't have to use it — but you still checked.
 
-**In OpenCode:** Use the `Skill` tool. When you invoke a skill, its content is loaded — follow it directly. Never read skill files with the Read tool.
+Before answering, ask: is a task at hand? → does any skill's description match? → if yes, load it and follow it exactly. The flow is: user message → check skills → (match) load + follow / (no match) respond. Planning counts as a task: brainstorm before designing.
 
-**In other environments:** Check your platform's documentation for how skills are loaded.
+Temptations that mean "check first": "I'll explore the codebase first" (skills say how to explore), "the skill is overkill" (load it; it will tell you if it doesn't apply), "just this one small thing first".
 
-## The Rule
+**Priority when several skills could apply:** process skills first (brainstorming, debugging — they decide *how* to approach), then implementation skills (frontend-design, mcp-builder — they guide execution). "Build X" → brainstorming then implementation; "fix this bug" → debugging then domain skills.
 
-**Invoke matching skills BEFORE any response or action**, including clarifying questions. If an invoked skill turns out not to apply, you don't have to use it — but you still checked.
-
-```dot
-digraph skill_flow {
-    "User message received" [shape=doublecircle];
-    "About to enter plan mode?" [shape=diamond];
-    "Already brainstormed?" [shape=diamond];
-    "Invoke brainstorming skill" [shape=box];
-    "Skill description matches?" [shape=diamond];
-    "Invoke Skill tool" [shape=box];
-    "Announce: 'Using [skill] to [purpose]'" [shape=box];
-    "Follow skill exactly" [shape=box];
-    "Respond" [shape=doublecircle];
-
-    "User message received" -> "About to enter plan mode?";
-    "About to enter plan mode?" -> "Already brainstormed?" [label="yes"];
-    "About to enter plan mode?" -> "Skill description matches?" [label="no"];
-    "Already brainstormed?" -> "Invoke brainstorming skill" [label="no"];
-    "Already brainstormed?" -> "Skill description matches?" [label="yes"];
-    "Invoke brainstorming skill" -> "Skill description matches?";
-    "Skill description matches?" -> "Invoke Skill tool" [label="yes"];
-    "Skill description matches?" -> "Respond" [label="no"];
-    "Invoke Skill tool" -> "Announce: 'Using [skill] to [purpose]'";
-    "Announce: 'Using [skill] to [purpose]'" -> "Follow skill exactly";
-    "Follow skill exactly" -> "Respond";
-}
-```
-
-## Red Flags
-
-| Thought | Action |
-|---------|--------|
-| "I'll explore the codebase first" | Check for a skill first — skills tell you how to explore. |
-| "I remember this skill" | Load the current version; skills evolve. |
-| "The skill is overkill here" | Load it. The skill itself will tell you if it doesn't apply. |
-| "I'll do this one small thing first" | Check for skills before any action. |
-
-## Skill Priority
-
-When multiple skills could apply:
-
-1. **Process skills first** (brainstorming, debugging) — these determine HOW to approach the task.
-2. **Implementation skills second** (frontend-design, mcp-builder) — these guide execution.
-
-"Let's build X" → brainstorming first, then implementation skills.
-"Fix this bug" → debugging first, then domain-specific skills.
-
-## Skill Types
-
-- **Rigid** (TDD, debugging): Follow exactly.
-- **Flexible** (patterns): Adapt principles to context.
-
-The skill itself states which.
-
-## User Instructions
-
-Instructions say WHAT, not HOW. "Add X" or "Fix Y" doesn't mean skip workflows.
+**Skill types:** rigid (TDD, debugging) follow exactly; flexible (patterns) adapt to context. The skill states which. Instructions say WHAT, not HOW — "add X" never means skip workflows.
