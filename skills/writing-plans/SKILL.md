@@ -17,14 +17,6 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
 
-**Mirror to murmur8:** After saving the plan file, create matching tasks via the murmur8 MCP:
-
-1. Look up the task list whose name matches the repo/project name.
-2. Create a parent task: title = plan title, tags = `["source:opencode", "type:plan"]`.
-3. Create one subtask per plan task: title = task title, `parentTaskId` = parent task id.
-
-If the murmur8 MCP is unavailable, warn and continue — the plan file is the source of truth, murmur8 is a mirror for visibility.
-
 ## Bite-Sized Task Granularity
 
 **Each step is one action (2-5 minutes):**
